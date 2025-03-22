@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Catégorie du module -->
+        <record id="module_gestion_documents_stage" model="ir.module.category">
+            <field name="name">Gestion Documents Stage</field>
+        </record>   
+        
+        <!-- Groupe Étudiants -->
+        <record id="group_student" model="res.groups">
+            <field name="name">Étudiants</field>
+            <field name="category_id" ref="module_gestion_documents_stage"/>
+        </record>
+
+        <!-- Groupe Responsables de Stage -->
+        <record id="group_responsable" model="res.groups">
+            <field name="name">Responsables de Stage</field>
+            <field name="category_id" ref="module_gestion_documents_stage"/>
+        </record>
+
+        <!-- Groupe Administrateurs -->
+        <record id="group_admin" model="res.groups">
+            <field name="name">Administrateurs Stage</field>
+            <field name="category_id" ref="module_gestion_documents_stage"/>
+            <field name="users" 
+                   eval="[(4, ref('base.user_root')),
+                          (4, ref('base.user_admin'))]"/>
+        </record>
+    </data>
+</odoo>

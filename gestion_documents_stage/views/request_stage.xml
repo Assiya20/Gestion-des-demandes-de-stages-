@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vue Formulaire de la Demande de Stage -->
+    <record id="view_form_request" model="ir.ui.view">
+        <field name="name">Formulaire Etudiant</field>
+        <field name="model">gestion_documents_stage.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="genre"/>
+                            <field name="cne"/>
+                            <field name="niveau"/>
+                            <field name="specialite"/>
+                            <field name="annee_universitaire"/>
+                            <field name="date_debut"/>
+                            <field name="date_fin"/>
+                        </group>
+                        <group>
+                            <field name="entreprise"/>
+                            <field name="adresse_entreprise"/>
+                            <field name="ville_entreprise"/>
+                            <field name="telephone_entreprise"/>
+                            <field name="tuteur_entreprise"/>
+                            <field name="tuteur_academique"/>
+                        </group>
+                        <group>
+                            <field name="state" readonly="1"/>
+                        </group>
+
+                        <!-- Section des Documents de Stage -->
+                        <group string="Documents de Stage">
+                            <field name="document_demande" widget="binary" filename="Demande_stage.docx"/>
+                            <field name="document_convention" widget="binary" filename="convention_stage.pdf"/>
+                            <field name="document_fiche" widget="binary" filename="Fiche_stage.pdf"/>
+                        </group>
+                    </group>
+                    <!-- Bouton de soumission visible uniquement en mode "draft" -->
+                    <button name="action_submit"
+                            string="Soumettre"
+                            type="object"
+                            class="oe_highlight"
+                            modifiers='{"invisible": [["state", "!=", "draft"]]}'/>
+
+                    <footer>
+                         <!-- Bouton pour soumettre les documents -->
+                        <button name="action_submit_documents"
+                                string="✅ Soumettre les Documents"
+                                type="object"
+                                class="btn-success"/>
+                        <group>
+                            <group groups="gestion_documents_stage.group_student">
+                                <!-- Boutons de Téléchargement des Documents -->
+                                <button name="action_download_demande"
+                                        string="📄 Télécharger Demande de Stage"
+                                        type="object"
+                                        class="btn-info"/>
+
+                                <button name="action_download_convention"
+                                        string="📄 Télécharger Convention de Stage"
+                                        type="object"
+                                        class="btn-info"/>
+
+                                <button name="action_download_fiche"
+                                        string="📄 Télécharger Fiche de Stage"
+                                        type="object"
+                                        class="btn-info"/>
+                            </group>
+                        </group>
+
+                       
+                    </footer>
+
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Vue Liste pour afficher les documents de stage -->
+    <record id="view_list_request" model="ir.ui.view">
+        <field name="name">Liste des Demandes de Stage</field>
+        <field name="model">gestion_documents_stage.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <!-- Colonnes pour afficher les informations de la demande de stage -->
+                <field name="name" string="Nom de l'Étudiant"/>
+                <field name="email" string="Email"/>
+                <field name="niveau" string="Niveau"/>
+                <field name="specialite" string="Spécialité"/>
+                <field name="state" string="Statut" widget="statusbar"/>
+
+                <!-- Colonnes pour afficher les documents -->
+                <field name="document_demande" string="Demande de Stage" widget="binary"/>
+                <field name="document_convention" string="Convention de Stage" widget="binary"/>
+                <field name="document_fiche" string="Fiche de Stage" widget="binary"/>
+                
+                <!-- Action pour accepter ou refuser -->
+                <button name="action_accept_documents" string="Accepter" type="object" class="btn-success" context="{'active_ids': [id]}"/>
+                <button name="action_reject_documents" string="Refuser" type="object" class="btn-danger" context="{'active_ids': [id]}"/>
+        
+            </list>
+        </field>
+    </record>
+
+   <record id="view_kanban_signature_document" model="ir.ui.view">
+       <field name="name">Documents à Signer (Kanban)</field>
+       <field name="model">gestion_documents_stage.document</field>
+       <field name="arch" type="xml">
+            <kanban>
+              <!-- Add Filters and Buttons -->
+                <search>
+                    <filter name="validated_filter" 
+                        string="✅ Validated" 
+                        domain="[('state', '=', 'validated')]"
+                        help="Afficher uniquement les documents validés."/>
+                </search>
+
+            <!-- Add Button in the Kanban Header -->
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>📄 <field name="document_type"/></div>
+                            <div>✅ <field name="state" widget="statusbar"/></div>
+            
+                             <!-- Button to Sign -->
+                             <button type="object" name="action_sign"
+                                string="🖊️ Signer"
+                                class="btn btn-success"
+                                modifiers="{'invisible': [('state', '=', 'signed')]}" />
+                       </div>
+                    </t>
+
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+
+
+<record id="view_signature_document_form" model="ir.ui.view">
+    <field name="name">Formulaire de Signature</field>
+    <field name="model">gestion_documents_stage.document</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="name" readonly="1"/>
+                    <field name="document_type" readonly="1"/>
+                    <field name="file" widget="binary" filename="name"/>
+                    <field name="signature" widget="binary" filename="Signature" required="1"/>
+                </group>
+                <footer>
+                    <button name="action_sign" 
+                            string="✅ Valider la Signature" 
+                            type="object" 
+                            class="btn-success" 
+                            modifiers='{"invisible": [["state", "!=", "draft"]]}'/>
+
+                </footer>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+</odoo>
