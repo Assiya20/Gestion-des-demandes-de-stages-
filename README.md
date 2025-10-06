@@ -1,11 +1,11 @@
 # Gestion des Documents de Stage - Application ERP avec Odoo
 
-## 📌 Description du projet  
+##  Description du projet  
 Ce projet est une **application ERP développée dans Odoo**, conçue pour automatiser et optimiser la gestion des documents de stage (demandes, conventions, fiches de stage). L'application permet aux utilisateurs de suivre, gérer et valider les documents liés aux stages, tout en assurant un stockage sécurisé et une récupération efficace des informations via PostgreSQL.
 
 ---
 
-## ⚙️ Fonctionnalités principales  
+##  Fonctionnalités principales  
 - **Automatisation des processus** :  
   - Validation et suivi des documents via un workflow intégré.  
   - Gestion des utilisateurs et des rôles.  
@@ -16,7 +16,7 @@ Ce projet est une **application ERP développée dans Odoo**, conçue pour autom
 
 ---
 
-## 🛠️ Technologies utilisées  
+##  Technologies utilisées  
 - **Framework ERP** : Odoo  
 - **Langages** : Python, XML  
 - **Base de données** : PostgreSQL  
@@ -24,7 +24,7 @@ Ce projet est une **application ERP développée dans Odoo**, conçue pour autom
 
 ---
 
-## 🚀 Installation et exécution  
+##  Installation et exécution  
 ### Pré-requis :  
 - **Python** installé (version 3.12.7)  
 - **PostgreSQL** installé et configuré  
